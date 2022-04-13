@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="test"></div>
+  <script type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- 必须放在react核心库的后面 -->
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script type="text/babel">
+  /*
+  * 区分 js[表达式]和js[语句]
+  * 1. 表达式: 表达式会产生一个值, 可以放在任何一个需要值的地方 (1) function(){}; arr.map()
+  * 2. 语句: (1) if() {}; (2) for(){}; (3)switch() {case:}
+  */
+    // 模拟数据
+    
+    const listData = [
+      {id: 1, name: '张三'},
+      {id: 2, name: '李四'},
+      {id: 3, name: '王五'}
+    ]
+    const VDOM = (
+      <div>
+        <h1>这是一个简单的列表</h1>
+        <ul>
+          {
+            listData.map((item, index) => {
+              return <li key={index}>{item.name}</li>
+            })
+          }
+        </ul>
+      </div>
+    )
+    ReactDOM.render(
+      VDOM,
+      document.getElementById('test')
+    )
+  </script>
+</body>
+
+</html>

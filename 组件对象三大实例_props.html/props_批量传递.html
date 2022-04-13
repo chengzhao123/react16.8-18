@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- 必须放在react核心库的后面 -->
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script type="text/babel">
+    // 创建组件
+    class  Person extends React.Component {
+      render() {
+        const { name, age, sex} = this.props
+        return (
+          <ul>
+            <li>姓名：{name}</li>  
+            <li>性别：{age}</li>  
+            <li>年龄：{sex}</li>  
+          </ul>
+        )
+      }
+    }
+    // 渲染组件到页面
+    // {...p} 批量传递
+    const p = {name: '程钊', age: 18, sex: '男'}
+    ReactDOM.render( <Person {...p}/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

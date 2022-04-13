@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .title {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- 必须放在react核心库的后面 -->
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script type="text/babel">
+    // 这是jsx的语法写法
+    const myId = "header"
+    const myData = "hello, this is a simple page"
+    const s = { color: "blue" }
+    const VDOM = (
+      <div>
+        <h2 className="title" id={myId}>
+          <span style={s}>{myData}</span>
+        </h2>
+        <input type="text" name="" id="" />
+      </div>
+
+    )
+    ReactDOM.render(
+      VDOM,
+      document.getElementById('root')
+    );
+    /**
+     * JSX的语法规则
+     * 1. 定义虚拟DOM的时候 不要加引号 虚拟DOM就是例子中的VDOM
+     * 2. 标签中混入js表达式时候 要用{} 例子中的myId
+     * 3. 样式的类名指定不能用class 要用className 例子中的title
+     * 4. 使用style样式的时候要用 style={{key: value}}的方式插入
+     *    方式一 const s = {color: 'red'} <span style={s}><span>
+     *    方式二 <span style={{color: "blue"}}></span>
+     *    两个{{}}表示的是style包裹的一个对象{} 外层的{}就是语法二的内容
+     * 5. VDOM(虚拟DOM)只能有一个根标签 并且标签必须闭合
+     * 6. 标签首字母必须大写
+     *    (1). 若首字母是小写字母 那么将为转成HTML中同名的元素 如HTML中没有该标签 那么就会报错
+     *    (2). 若首字母是大写字母 那么react就会去渲染对应的组件 若组件没有对应 那么就会报错
+     */
+  </script>
+</body>
+
+</html>

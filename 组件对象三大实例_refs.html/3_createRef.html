@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 引入react核心库 -->
+  <script type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- 必须放在react核心库的后面  引入react-dom 用于支持react操作dom -->
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 把jsx转换成js -->
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+  <script type="text/babel">
+  // 创建组件
+  class Demo extends React.Component {
+    /* React.createRef 调用后返回一个容器 该容器可以存储被ref所标识的节点 该容器是“专人专用的” 一个名字表示一个容器 否则会覆盖 例子如下
+    <input ref={this.saveInput} type="text" placeholder="点击按钮提示数据" />
+    <input ref={this.saveInput} type="text" placeholder="点击按钮提示数据" /> 会覆盖 因为两个ref所指的都是一个容器
+    */
+    saveInput = React.createRef()
+    // 展示输入框数据
+    showData = () => {
+      console.log(this.saveInput) // {current: input} 自带的current
+      console.log(this.saveInput.current.value) // 当前input输入框的值 current是react自己携带的
+    }
+
+    render() {
+      return (
+        <div>
+          {/*<input ref={ c => {this.input1 = c;console.log('@',c)}} type="text" placeholder="点击按钮提示数据" />*/}
+          <input ref={this.saveInput} type="text" placeholder="点击按钮提示数据" />
+          <button onClick={this.showData}>点我提示左侧数据</button>
+        </div>
+      )
+    }
+  }
+  ReactDOM.render(
+    <Demo/>,document.getElementById('test')
+  )
+  </script>
+</body>
+</html>

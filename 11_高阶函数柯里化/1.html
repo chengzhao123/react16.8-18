@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 引入react核心库 -->
+  <script type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- 必须放在react核心库的后面  引入react-dom 用于支持react操作dom -->
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 把jsx转换成js -->
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+  <script type="text/babel">
+  // 受控组件就是把数据先储存起来 非受控组件就是现用现取
+  class Login extends React.Component {
+    state = {
+      username: '',
+      password: ''
+    }
+    saveData = (type) => {
+      return (e)=> {
+        this.setState({ [type]: e.target.value })
+      }
+    }
+    saveData2 = (type, e) => {
+        this.setState({ [type]: e.target.value })
+    }
+    render() {
+      return (
+        <div>
+          <input onChange={this.saveData('username')} type="text" />
+          <input onChange={this.saveData('password')} type="password" />
+          {/*不用高阶函数*/}
+          <input onChange={ e => { this.saveData2('username', e)}} type="text" />
+          <input onChange={ e => { this.saveData2('password', e)}} type="password" />
+          <p>{this.state.password}</p>
+        </div>
+      )
+    }
+  }
+  ReactDOM.render(<Login/>, document.getElementById('test'))
+  </script>
+</body>
+</html>

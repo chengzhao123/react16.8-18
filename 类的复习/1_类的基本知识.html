@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>类的基本知识</title>
+</head>
+<body>
+  <script>
+    class Person {
+      // 构造器
+      constructor(name, age) {
+        // console.log(this) // this指向的类的实例对象
+        this.name = name
+        this.age = age
+      }
+      // 一般方法
+      speack() {
+        console.log(`我的名字叫做${this.name},我的年龄是${this.age}`)
+      }
+    }
+    const p1 = new Person('小王', 18)
+    const p2 = new Person('小李', 20)
+    // p1.speack()
+    // p1.speack.call({name: '小明',age: 22}) // 改变this的指向
+
+
+    // 创建一个Student类来继承Person类
+    class Student extends Person {
+      constructor(name, age, grade) {
+        super(name, age)
+        this.grade  = grade
+      }
+    }
+    const p3 = new Student('小张', 100)
+    p3.speack()
+    
+    const p4 = new Student('小程', 22, '高一')
+    console.log(p4)
+  </script>
+</body>
+</html>

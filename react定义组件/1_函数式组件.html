@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数式组件</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- 必须放在react核心库的后面 -->
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script type="text/babel">
+    // 1.创建函数式组件 首字母必须大写
+    function Demo() {
+      // console.log(this)  此处this是undefined   
+      return (
+        <h1>
+          <span>这是一个简单的简单</span>
+        </h1>
+      )
+    }
+    // 渲染组件到页面
+    ReactDOM.render(<Demo/>, document.getElementById('test'))
+  </script>
+</body>
+</html>

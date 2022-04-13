@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新的生命周期</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 最新版本的接口 -->
+  <!-- react核心库-->
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <!-- react核心库上面的reactDOM-->
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- es6转成es5-->
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <!-- props的defaultProps propTypes PropTypes -->
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+
+  <script type="text/babel">
+    class Count extends React.Component {
+      constructor(props) {
+        console.log('Count-constructor')
+        super(props)
+        this.state = {count: 0}
+      }
+      // 操控组件更新的“阀门” 默认返回true 就是更新(当state中状态改变的时候更新render()) false就不更新
+      shouldComponentUpdate() {
+        console.log('Count---shouldComponentUpdate')
+        return true
+      }
+
+      // 组件将要更新UNSAFE_componentWillUpdate(将要被弃用)
+
+      // 组件更新完成之后 
+      componentDidUpdate(preprops,prestate,snapshotValue) {
+        console.log('Count---componentDidUpdate',preprops,prestate,snapshotValue) // 之前的props和之前的state 和getSnapshotBeforeUpdate() return传递过来的值
+      }
+
+      //UNSAFE_componentWillMount 组件将要被创建(将要被弃用)
+     static getDerivedStateFromProps(props,state) { // 让state中的值取决于props传递的值 不会改变
+        console.log('Count---getDerivedStateFromProps',props,state)
+        // 必须return 
+        return null
+      }
+      getSnapshotBeforeUpdate() { // 在最近一次渲染输出(提交DOM节点)之前调用(滚动位置)
+        console.log('Count---getSnapshotBeforeUpdate')
+        return 1
+      }
+      // 组件挂载完毕之后调用  进入页面就开始加载 只加载一次 类似 vue的mounted
+      componentDidMount() { 
+        console.log('Count---componentDidMount')
+      }
+
+      // 组件将要卸载的时候调用
+      componentWillUnmount() {
+        console.log('Count---componentWillUnmount')
+      }     
+
+      // 添加一个
+      add = ()=> {
+        const {count} = this.state
+        this.setState({count: count + 1})
+      }
+      // 卸载组件
+      death = ()=> {
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+      // 强制更新
+      force = ()=> {
+        this.forceUpdate()
+      }
+      render() {
+        const {count} = this.state
+        console.log('Count---render')
+        return (
+          <div>
+            <h2>当前数字是{count}</h2>
+            <button onClick={this.add}>点击增加</button>
+            <button onClick={this.death}>清除组件</button>
+            <button onClick={this.force}>强制更新</button>
+          </div>
+        )
+      }
+    }
+  ReactDOM.render(<Count count={22}/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

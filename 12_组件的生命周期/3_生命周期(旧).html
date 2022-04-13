@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新的生命周期</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 最新版本的接口 -->
+  <!-- react核心库-->
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <!-- react核心库上面的reactDOM-->
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- es6转成es5-->
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <!-- props的defaultProps propTypes PropTypes -->
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+
+  <script type="text/babel">
+    class Count extends React.Component {
+      constructor(props) {
+        console.log('Count-constructor')
+        super(props)
+        this.state = {count: 0}
+      }
+      // 操控组件更新的“阀门” 默认返回true 就是更新(当state中状态改变的时候更新render()) false就不更新
+      shouldComponentUpdate() {
+        console.log('Life---shouldComponentUpdate')
+        return true
+      }
+
+      // 组件将要更新
+      componentWillUpdate() {
+        console.log('Life---componentWillUpdate')
+      }
+
+      // 组件更新完成之后
+      componentDidUpdate() {
+        console.log('Life---componentDidUpdate')
+      }
+
+      // 组件将要被创建
+      componentWillMount() {
+        console.log('Life---componentWillMount')
+      }
+
+      // 组件挂载完毕之后调用  进入页面就开始加载 只加载一次 类似 vue的mounted
+      componentDidMount() {
+        console.log('Life---componentDidMount')
+      }
+
+      // 组件将要卸载的时候调用
+      componentWillUnmount() {
+        console.log('Life---componentWillUnmount')
+      }     
+
+      // 添加一个
+      add = ()=> {
+        const {count} = this.state
+        this.setState({count: count + 1})
+      }
+      // 卸载组件
+      death = ()=> {
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+      // 强制更新
+      force = ()=> {
+        this.forceUpdate()
+      }
+      render() {
+        const {count} = this.state
+        console.log('Life---render')
+        return (
+          <div>
+            <h2>当前数字是{count}</h2>
+            <button onClick={this.add}>点击增加</button>
+            <button onClick={this.death}>清除组件</button>
+            <button onClick={this.force}>强制更新</button>
+          </div>
+        )
+      }
+    }
+  // ReactDOM.render(<Count/>,document.getElementById('test'))
+  class A extends React.Component {
+      state = {carName: '奔驰'}
+      changeCar = ()=> {
+        this.setState({carName: '宝马'})
+      }
+      render() {
+        const {carName} = this.state
+        return (
+          <div>
+            <div>我是A组件</div>
+            <button onClick={this.changeCar}>换车</button>
+            <B carName={carName}/>
+          </div>
+        )
+      }
+  }
+  class B extends React.Component {
+    // 组件将要接受新的props钩子
+    componentWillReceiveProps(props) {
+      console.log('B---componentWillReceiveProps', props)
+    }
+    // 控制组件更新的阀门
+    shouldComponentUpdate() {
+      console.log('B---shouldComponentUpdate')
+      return true
+    }
+    // 组件将要更新的钩子
+    componentWillUpdate() {
+      console.log('B---componentWillUpdate')
+    }
+    // 组件更新完成的钩子
+    componentDidUpdate() {
+      console.log('B---componentDidUpdate')
+    }
+    render() {
+      const {carName} = this.props
+      return (
+        <div>我是B组件，接收到的carName是{carName}</div>
+      )
+    }
+  }
+  ReactDOM.render(<A/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

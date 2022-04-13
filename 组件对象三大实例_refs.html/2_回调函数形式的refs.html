@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 引入react核心库 -->
+  <script type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- 必须放在react核心库的后面  引入react-dom 用于支持react操作dom -->
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 把jsx转换成js -->
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+  <script type="text/babel">
+  // 创建组件
+  class Demo extends React.Component {
+    state = {isHot: true}
+    // 展示左侧输入框数据
+    showData = () => {
+      const {input1} = this
+      console.log(input1.value)
+    }
+    // 展示右侧输入框数据
+    blurData = () => {
+      const {input2} = this
+      console.log(input2.value)
+    }
+    // 切换天气
+    changeWeather = ()=> {
+      const {isHot} = this.state
+      this.setState({
+        isHot: !isHot
+      })
+    }
+    saveInput = (c)=> {
+      this.input1 = c;
+      console.log('@',c)
+    }
+    render() {
+      const {isHot} = this.state
+      return (
+        <div>
+          <h2>今天的天气很{isHot ? '炎热': '寒冷'}</h2><br/><br/>
+          {/*<input ref={ c => {this.input1 = c;console.log('@',c)}} type="text" placeholder="点击按钮提示数据" />*/}
+          <input ref={this.saveInput} type="text" placeholder="点击按钮提示数据" />
+          <button onClick={this.showData}>点我提示左侧数据</button>
+          <input ref={ c => this.input2 = c} onBlur={this.blurData} type="text" placeholder="失去焦点提示数据" />
+          <button onClick={this.changeWeather}>点击切换天气</button>
+        </div>
+      )
+    }
+  }
+  ReactDOM.render(
+    <Demo/>,document.getElementById('test')
+  )
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <!-- 引入react核心库 -->
+  <script type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- 必须放在react核心库的后面  引入react-dom 用于支持react操作dom -->
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 把jsx转换成js -->
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+  <script type="text/babel">
+  class Life extends React.Component {
+    state = {opacity: 1}
+    removeComponent = ()=> {
+      // clearInterval(this.timer)
+      // 清除组件
+      ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+    }
+    // 组件挂载完毕之后调用  进入页面就开始加载 只加载一次 类似 vue的mounted
+    componentDidMount() {
+      let { opacity } = this.state
+      this.timer = setInterval(() => {
+        opacity -= 0.1
+        if (opacity <= 0 ) opacity = 1
+        this.setState({opacity})
+      }, 200);
+    }
+    // 组件将要卸载的时候调用
+    componentWillUnmount() {
+      clearInterval(this.timer)
+    }
+    render() {
+      return (
+        <div>
+          <h2 style={{opacity: this.state.opacity}}>渐渐消失隐藏显示</h2>
+          <button onClick={this.removeComponent}>清除组件</button>  
+        </div>
+      )
+    }
+  }
+  ReactDOM.render(<Life/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

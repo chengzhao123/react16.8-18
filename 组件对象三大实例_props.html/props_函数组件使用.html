@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="test"></div>
+  <!-- 引入react核心库 -->
+  <script type="text/javascript" src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <!-- 必须放在react核心库的后面  引入react-dom 用于支持react操作dom -->
+  <script type="text/javascript" src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <!-- 把jsx转换成js -->
+  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+  <script type="text/babel">
+    // 创建组件
+    // class Person extends React.Component {
+    //   // 限制数据类型
+    //   static propTypes = {
+    //     name: PropTypes.string.isRequired, // isRequired限制name必须传递
+    //     sex: PropTypes.string,
+    //     age: PropTypes.number,
+    //     speak: PropTypes.func
+    //   }
+    //   // 默认值
+    //   static defaultProps = {
+    //     sex: '男',
+    //     age: 18
+    //   }
+    //   render() {
+    //     const { name, age, sex } = this.props
+    //     console.log(this)
+    //     return (
+    //       <ul>
+    //         <li>姓名：{name}</li>
+    //         <li>性别：{sex}</li>
+    //         <li>年龄：{age}</li>
+    //       </ul>
+    //     )
+    //   }
+    // }
+
+    function Person(props) {
+      console.log(props) // {name: "程钊", age: 22, sex: "男"}
+      const {name,sex,age} = props
+      return (
+        <ul>
+          <li>姓名：{name}</li>
+          <li>性别：{sex}</li>
+          <li>年龄：{age}</li>
+        </ul>
+      )
+    }
+    Person.propTypes = {
+      name:PropTypes.string.isRequired,
+      sex:PropTypes.number
+    }
+    Person.defaultProps = {
+      sex: '男',
+      age: 18
+    }
+    // 渲染组件到页面
+    // {...p} 批量传递
+    const p = { name: '程钊'}
+    ReactDOM.render(<Person {...p}  />, document.getElementById('test'))
+  </script>
+</body>
+
+</html>
